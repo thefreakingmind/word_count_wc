@@ -1,4 +1,4 @@
-# WC Implementation called SALWC :P
+# WC Implementation called SALWC 😜
 
 
 
