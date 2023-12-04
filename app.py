@@ -2,22 +2,7 @@ from setuptools import setup, find_packages
 import sys
 import os 
 from pathlib import Path
-
-
-
-class FileReader(object):
-    def __init__(self, file_name, instruction):
-        self.file_name = file_name
-        self.instruction = instruction 
-        self.file_header = None
-
-    def read_file(self):
-        with open (self.file_name, self.instruction, encoding="utf-8") as fh:
-            self.file_header = fh
-
-    def calculate_file_header_size(self):
-        print(dir(self.file_header))
-
+from filereader import FileReader
 
 
 class CalculationProcessor(object):
@@ -25,7 +10,10 @@ class CalculationProcessor(object):
         self.data = data
         self.file_name = file_name 
         self.instruction = instruction
-        self.arguements =  sys.argv[1]
+        if sys.argv is not None:
+            self.arguements =  sys.argv[1]
+        else:
+            self.arguments = None
 
     def calculate_file_size(self):
         fileData = os.stat(self.file_name)
@@ -39,7 +27,7 @@ class CalculationProcessor(object):
         elif self.arguements == '-w':
             return self.calculate_word()
         elif self.arguements == None:
-            return read_lines()
+            return self.read_lines()
         else:
             print("Invalid Arguement passed in the command")
 
@@ -52,6 +40,7 @@ class CalculationProcessor(object):
 
     def calculate_bytes(self):
         tiny_byte = 0
+        # print(self.data)
         for line in self.data:
             tiny_byte += len(line)
         return tiny_byte 
@@ -78,7 +67,7 @@ class CalculationProcessor(object):
 
 if __name__ == '__main__':
     file_reader = FileReader("input_text.txt", "r")
-    data = file_reader.calculate_file_header_size()
+    data = file_reader.read_file()
     calculation = CalculationProcessor(data, "input_text.txt",'r' )
     # calculation.read_lines()
     calculation.calculate_lines() 
