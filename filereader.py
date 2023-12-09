@@ -12,3 +12,6 @@ class FileReader(object):
 
     def calculate_file_header_size(self):
         return self.file_header
+
+    def process_file(self):
+        return self.file_header
